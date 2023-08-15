@@ -1,12 +1,13 @@
 import React from 'react';
-{/*import FetchDataComponent from './FetchDataComponent';
-import ListDataComponent from './ListDataComponent';*/}
+import FetchDataComponent from './FetchDataComponent.tsx';
+import ListDataComponent from './ListDataComponent.tsx';
+import CalendarComponent from './CalendarComponent.tsx';
 
 function App() {
   return (
     <div className="App">
-      {/*<FetchDataComponent id={9} tableName="LIDL" />
-      <ListDataComponent tableName="LIDL"></ListDataComponent>*/}
+      <ListDataComponent tableName="LIDL"></ListDataComponent>
+      <CalendarComponent/>
     </div>
   );
 }
