@@ -36,7 +36,6 @@ const FetchDataComponent = ({ id, tableName }) => {
 
   return (
     <div>
-      <h2>Title: {title}<br></br>Date: {date}</h2>
       <div dangerouslySetInnerHTML={{ __html: data }}></div>
     </div>
   );

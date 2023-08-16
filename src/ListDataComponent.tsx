@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import supabase from './supabase';
 import FetchDataComponent from './FetchDataComponent.tsx';
 
-const ListDataComponent = ({ tableName, dateToGet }) => {
+const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
   const [dataList, setDataList] = useState([]);
-  const [selectedItemId, setSelectedItemId] = useState(null); // State to track the selected item ID
+  const [selectedItemId, setSelectedItemId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data, error } = await supabase
           .from(tableName)
-          .select('id, title, date') // Include the ID in the select statement
-          .eq('date', dateToGet); // Filter the data by the provided date
+          .select('id, title, date')
+          .eq('date', dateToGet);
 
         if (error) {
           console.error('Error fetching data:', error);
@@ -25,15 +25,18 @@ const ListDataComponent = ({ tableName, dateToGet }) => {
     };
 
     fetchData();
-  }, [tableName, dateToGet]); // Include dateToGet as a dependency
+  }, [tableName, dateToGet]);
+
+  useEffect(() => {
+    setSelectedItemId(null); // Reset selected item when selectedDate changes
+  }, [selectedDate]);
 
   const handleItemClick = (itemId) => {
-    setSelectedItemId(itemId);
+    setSelectedItemId(prevSelectedItemId => prevSelectedItemId === itemId ? null : itemId);
   };
 
   return (
     <div>
-      <h2>List of Data from {tableName} on {dateToGet}</h2>
       <ul>
         {dataList.map((record) => (
           <li key={record.id}>
@@ -44,7 +47,6 @@ const ListDataComponent = ({ tableName, dateToGet }) => {
         ))}
       </ul>
       
-      {/* Conditional rendering based on selectedItemId */}
       {selectedItemId && (
         <FetchDataComponent id={selectedItemId} tableName={tableName} />
       )}

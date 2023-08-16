@@ -1,13 +1,14 @@
-import React from 'react';
-import FetchDataComponent from './FetchDataComponent.tsx';
-import ListDataComponent from './ListDataComponent.tsx';
-import CalendarComponent from './CalendarComponent.tsx';
+import React, { useState } from 'react';
+import CompanyList from './CompanyList';
+import CalendarComponent from './CalendarComponent';
 
 function App() {
+  const [tableName, setTableName] = useState('LIDL'); // Initialize with a default value
+
   return (
     <div className="App">
-      <ListDataComponent tableName="LIDL"></ListDataComponent>
-      <CalendarComponent/>
+      <CompanyList tableName={tableName} changeTableName={setTableName} />
+      <CalendarComponent companyName={tableName} />
     </div>
   );
 }

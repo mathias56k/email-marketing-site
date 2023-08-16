@@ -1,7 +1,7 @@
 .app {
     text-align: center;
     margin-top: 50px;
-  }
+}
   
 .highlighted-date {
     background-color: red;
@@ -9,4 +9,8 @@
     width: 18px;
     height: 18px;
     margin: 0 auto;
+}
+
+.react-calendar__tile--active {
+  color: black;
 }

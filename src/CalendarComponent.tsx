@@ -5,14 +5,14 @@ import supabase from './supabase';
 import './App.css';
 import ListDataComponent from './ListDataComponent';
 
-const CalendarComponent = () => {
+const CalendarComponent = ({ companyName }) => {
   const [calendarData, setCalendarData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     async function fetchCalendarData() {
-      const { data, error } = await supabase.from('LIDL').select('*');
+      const { data, error } = await supabase.from(companyName).select('*');
       if (error) {
         console.error('Error fetching calendar data:', error);
       } else {
@@ -21,27 +21,26 @@ const CalendarComponent = () => {
     }
 
     fetchCalendarData();
-  }, []);
+  }, [companyName]);
 
+  useEffect(() => {
+    if (selectedDate) {
+      const matchingRows = calendarData.filter(item => {
+        const rowDate = new Date(item.date);
+        return rowDate.toDateString() === selectedDate.toDateString();
+      });
+      setSelectedRows(matchingRows);
+    }
+  }, [selectedDate, calendarData]);
 
-useEffect(() => {
-  if (selectedDate) {
-    const matchingRows = calendarData.filter(item => {
-      const rowDate = new Date(item.date);
-      return rowDate.toDateString() === selectedDate.toDateString();
-    });
-    setSelectedRows(matchingRows);
-  }
-}, [selectedDate, calendarData]);
+  const highlightedDates = calendarData.map(item => new Date(item.date));
 
-const highlightedDates = calendarData.map(item => new Date(item.date));
-
-const tileContent = ({ date, view }) => {
+  const tileContent = ({ date, view }) => {
     if (view === 'month' && highlightedDates.some(d => d.toDateString() === date.toDateString())) {
       return <div className="highlighted-date"></div>;
-    }
+    }  
     return null;
-};
+  };
 
   return (
     <div className="app">
@@ -58,7 +57,7 @@ const tileContent = ({ date, view }) => {
           <ul>
             {selectedRows.map((row, index) => (
               <li key={index}>
-                <ListDataComponent tableName={"LIDL"} dateToGet={row.date}/>
+                <ListDataComponent tableName={companyName} dateToGet={row.date} selectedDate={selectedDate} />
               </li>
             ))}
           </ul>
@@ -66,7 +65,6 @@ const tileContent = ({ date, view }) => {
       )}
     </div>
   );
-  
 };
 
 export default CalendarComponent;
