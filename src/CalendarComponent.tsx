@@ -43,8 +43,7 @@ const CalendarComponent = ({ companyName }) => {
   };
 
   return (
-    <div className="app">
-      <h1>Supabase Calendar App</h1>
+    <div className="app bg-green-500 m-0">
       <div className="calendar">
         <Calendar
           tileContent={tileContent}

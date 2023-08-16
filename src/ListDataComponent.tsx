@@ -26,6 +26,7 @@ const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
 
     fetchData();
   }, [tableName, dateToGet]);
+  
 
   useEffect(() => {
     setSelectedItemId(null); // Reset selected item when selectedDate changes
@@ -38,15 +39,19 @@ const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
   return (
     <div>
       <ul>
-        {dataList.map((record) => (
-          <li key={record.id}>
-            <a href="#" onClick={() => handleItemClick(record.id)}>
-              <strong>Title:</strong> {record.title} - <strong>Date:</strong> {record.date}
-            </a>
-          </li>
-        ))}
+        {dataList.map((record) => {
+          const dateObject = new Date(record.date);
+          const formattedTime = `${dateObject.getUTCHours().toString().padStart(2, "0")}:${dateObject.getUTCMinutes().toString().padStart(2, "0")}:${dateObject.getUTCSeconds().toString().padStart(2, "0")}`;
+
+          return (
+            <li key={record.id}>
+              <a href="#" onClick={() => handleItemClick(record.id)}>
+                <strong>Title:</strong> {record.title} - <strong>Time:</strong> {formattedTime}
+              </a>
+            </li>
+          );
+        })}
       </ul>
-      
       {selectedItemId && (
         <FetchDataComponent id={selectedItemId} tableName={tableName} />
       )}

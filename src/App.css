@@ -6,8 +6,8 @@
 .highlighted-date {
     background-color: red;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    width: .5em;
+    height: .5em;
     margin: 0 auto;
 }
 
