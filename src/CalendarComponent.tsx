@@ -43,19 +43,19 @@ const CalendarComponent = ({ companyName }) => {
   };
 
   return (
-    <div className="app bg-green-500 m-0">
-      <div className="calendar">
+    <div className="app bg-green-500 m-0 flex flex-wrap justify-center">
+      <div className="calendar bg-gray-500">
         <Calendar
           tileContent={tileContent}
           onClickDay={date => setSelectedDate(date)}
         />
       </div>
       {selectedRows.length > 0 && (
-        <div className="selected-rows">
-          <h2>Selected Rows for {selectedDate.toDateString()}:</h2>
-          <ul>
+        <div className="selected-rows bg-red-500">
+          <h2 className="text-xl font-bold mb-3">Selected Rows for {selectedDate.toDateString()}</h2>
+          <ul className="flex flex-col gap-2.5 overflow-scroll max-w-xl">
             {selectedRows.map((row, index) => (
-              <li key={index}>
+              <li className="rounded bg-green-300 p-5" key={index}>
                 <ListDataComponent tableName={companyName} dateToGet={row.date} selectedDate={selectedDate} />
               </li>
             ))}

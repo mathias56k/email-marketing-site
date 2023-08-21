@@ -9,8 +9,9 @@ function App() {
     <div className="App">
       <CompanyList tableName={tableName} changeTableName={setTableName} />
       <CalendarComponent companyName={tableName} />
+      <div id='content' className='bg-yellow-500 w-full h-screen'></div>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
 import supabase from './supabase';
 import FetchDataComponent from './FetchDataComponent.tsx';
 
-const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
+const ListDataComponent = ({ tableName, dateToGet, selectedDate, onItemClick }) => {
   const [dataList, setDataList] = useState([]);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
@@ -37,7 +38,7 @@ const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <ul>
         {dataList.map((record) => {
           const dateObject = new Date(record.date);
@@ -46,15 +47,15 @@ const ListDataComponent = ({ tableName, dateToGet, selectedDate }) => {
           return (
             <li key={record.id}>
               <a href="#" onClick={() => handleItemClick(record.id)}>
-                <strong>Title:</strong> {record.title} - <strong>Time:</strong> {formattedTime}
+                <strong>Title:</strong> {record.title} <strong>Time:</strong> {formattedTime}
               </a>
             </li>
           );
         })}
       </ul>
-      {selectedItemId && (
-        <FetchDataComponent id={selectedItemId} tableName={tableName} />
-      )}
+        {selectedItemId && (
+          <FetchDataComponent id={selectedItemId} tableName={tableName} />
+        )}
     </div>
   );
 };
